@@ -20,7 +20,14 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
             <div class="card">
                 <div class="card-header bg-primary text-white">Añadir Nueva Sala</div>
                 <div class="card-body">
-                    <form action="/Music-BOOKING/app/controllers/add_room.php" method="POST">
+                    <?php if (isset($_SESSION['add_room_error'])): ?>
+                        <div class="alert alert-danger"> <?php echo $_SESSION['add_room_error']; unset($_SESSION['add_room_error']); ?> </div>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['add_room_success'])): ?>
+                        <div class="alert alert-success"> <?php echo $_SESSION['add_room_success']; unset($_SESSION['add_room_success']); ?> </div>
+                    <?php endif; ?>
+                    <!-- Aqui quizas me equivoque con los directorios -->
+                    <form action="../../controllers/add_room.php" method="POST">
                         <div class="mb-3">
                             <label for="nombre_sala" class="form-label">Nombre de la Sala</label>
                             <input type="text" class="form-control" id="nombre_sala" name="nombre_sala" maxlength="100" required>
@@ -30,11 +37,11 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="precio_hora" class="form-label">Precio por Hora (€)</label>
+                            <label for="precio_hora" class="form-label">Precio por Hora ($)</label>
                             <input type="number" class="form-control" id="precio_hora" name="precio_hora" step="0.01" min="0" required>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="/Music-BOOKING/app/views/auth/admin_home.php" class="btn btn-secondary">Cancelar</a>
+                            <a href="admin_home.php" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">Añadir Sala</button>
                         </div>
                     </form>
