@@ -42,7 +42,7 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
                             <input type="number" class="form-control" id="precio_hora" name="precio_hora" step="0.01" min="0" required>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="admin_home.php" class="btn btn-secondary">Cancelar</a>
+                            <a href="manage_rooms.php" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">Añadir Sala</button>
                         </div>
                     </form>

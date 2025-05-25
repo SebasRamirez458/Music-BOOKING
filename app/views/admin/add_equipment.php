@@ -57,7 +57,7 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
                             <label class="form-check-label" for="disponible_prestamo">Disponible para préstamo</label>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="/Music-BOOKING/app/views/admin/admin_home.php" class="btn btn-secondary">Cancelar</a>
+                            <a href="/Music-BOOKING/app/views/admin/manage_equipment.php" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">Añadir Equipo</button>
                         </div>
                     </form>
