@@ -94,7 +94,7 @@ function getReservationsForDay($reservas, $dia) {
                                     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
                                         <form method="POST" class="mt-1 select-reserva-form">
                                             <input type="hidden" name="selected_reserva_id" value="<?php echo $res['reserva_id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-outline-primary w-100">Seleccionar</button>
+                                            <button type="submit" class="btn btn-sm w-100 <?php echo (isset($_POST['selected_reserva_id']) && $_POST['selected_reserva_id'] == $res['reserva_id']) ? 'btn-primary' : 'btn-outline-primary'; ?>">Seleccionar</button>
                                         </form>
                                     <?php endif; ?>
                                 </div>
@@ -108,16 +108,20 @@ function getReservationsForDay($reservas, $dia) {
         </tbody>
     </table>
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-        <a href="admin/admin_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
-        <?php else: ?>
-            <a href="user/user_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
-            <?php endif; ?>
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] && isset($_POST['selected_reserva_id'])): ?>
-                <form method="GET" action="admin/manage_reservation.php" class="mt-3">
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="admin/admin_home.php" class="btn btn-secondary">Volver al menú principal</a>
+            <?php if (isset($_POST['selected_reserva_id'])): ?>
+                <form method="GET" action="admin/manage_reservation.php" class="mb-0">
                     <input type="hidden" name="reserva_id" value="<?php echo htmlspecialchars($_POST['selected_reserva_id']); ?>">
                     <button type="submit" class="btn btn-warning">Administrar reserva seleccionada</button>
                 </form>
             <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="d-flex justify-content-start mt-3">
+            <a href="user/user_home.php" class="btn btn-secondary">Volver al menú principal</a>
+        </div>
+    <?php endif; ?>
 </div>
 </body>
 </html>
