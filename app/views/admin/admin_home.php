@@ -26,6 +26,10 @@ $nombre = $_SESSION['usuario'];
                     <p class="lead">Has iniciado sesión como administrador.</p>
                     <a href="/Music-BOOKING/app/views/admin/manage_rooms.php" class="btn btn-outline-success m-2">Administrar Salas</a>
                     <a href="/Music-BOOKING/app/views/admin/manage_equipment.php" class="btn btn-outline-primary m-2">Administrar Equipos</a>
+                    <a href="/Music-BOOKING/app/views/admin/manage_reservations.php" class="btn btn-outline-warning m-2">Administrar reservas</a>
+                </div>
+                <div class="card-body text-center">
+                    <a href="/Music-BOOKING/app/views/calendario.php" class="btn btn-outline-info m-2">Mostrar calendario</a>
                 </div>
             </div>
         </div>
