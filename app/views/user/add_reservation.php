@@ -40,6 +40,7 @@ if (!$band_id) {
     }
     </script>
 </head>
+<?php include '../layouts/navbar_in.php';?>
 <body class="bg-light">
 <div class="container mt-5">
     <div class="card shadow">
