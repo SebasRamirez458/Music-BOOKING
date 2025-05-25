@@ -14,6 +14,7 @@ $nombre = $_SESSION['usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<?php include '../layouts/navbar_in.php';?>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -25,6 +26,8 @@ $nombre = $_SESSION['usuario'];
                     <p class="lead">Has iniciado sesión como administrador.</p>
                     <a href="/Music-BOOKING/app/views/admin/add_room.php" class="btn btn-success m-2">Agregar Sala</a>
                     <a href="/Music-BOOKING/app/views/admin/add_equipment.php" class="btn btn-primary m-2">Agregar Equipo</a>
+                    <a href="/Music-BOOKING/app/views/admin/manage_rooms.php" class="btn btn-outline-success m-2">Administrar Salas</a>
+                    <a href="/Music-BOOKING/app/views/admin/manage_equipment.php" class="btn btn-outline-primary m-2">Administrar Equipos</a>
                 </div>
             </div>
         </div>
