@@ -29,7 +29,7 @@ $nombre = $_SESSION['usuario'];
                     <a href="/Music-BOOKING/app/views/admin/manage_reservations.php" class="btn btn-outline-warning m-2">Administrar reservas</a>
                 </div>
                 <div class="card-body text-center">
-                    <a href="/Music-BOOKING/app/views/calendario.php" class="btn btn-outline-info m-2">Mostrar calendario</a>
+                    <a href="/Music-BOOKING/app/views/calendar.php" class="btn btn-outline-info m-2">Mostrar calendario</a>
                 </div>
             </div>
         </div>
