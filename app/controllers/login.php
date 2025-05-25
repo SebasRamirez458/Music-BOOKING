@@ -12,13 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($userData) {
         $_SESSION['usuario'] = $userData['nombre'];
+        $_SESSION['user_id'] = $userData['user_id'];
         $_SESSION['is_admin'] = !empty($userData['is_admin']) && $userData['is_admin'];
         unset($_SESSION['login_error']);
         if ($_SESSION['is_admin']) {
             // se muy cuidadoso con estas direcciones, tipo, si las cambias verifica que los archivos existan
             header('Location: ../views/admin/admin_home.php');
         } else {
-            header('Location: ../viewsuser/user_home.php');
+            header('Location: ../views/user/user_home.php');
         }
         exit();
     } else {

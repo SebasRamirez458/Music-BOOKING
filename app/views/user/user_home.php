@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 $nombre = $_SESSION['usuario'];
@@ -14,6 +14,7 @@ $nombre = $_SESSION['usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<?php include '../layouts/navbar_in.php';?>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -23,6 +24,7 @@ $nombre = $_SESSION['usuario'];
                 </div>
                 <div class="card-body text-center">
                     <p class="lead">Has iniciado sesión correctamente.</p>
+                    <a href="manage_bands.php" class="btn btn-primary mt-3">Administrar Bandas</a>
                 </div>
             </div>
         </div>
