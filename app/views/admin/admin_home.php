@@ -24,7 +24,7 @@ $nombre = $_SESSION['usuario'];
                 <div class="card-body text-center">
                     <p class="lead">Has iniciado sesión como administrador.</p>
                     <a href="/Music-BOOKING/app/views/admin/add_room.php" class="btn btn-success m-2">Agregar Sala</a>
-                    <a href="#" class="btn btn-primary m-2">Agregar Equipo</a>
+                    <a href="/Music-BOOKING/app/views/admin/add_equipment.php" class="btn btn-primary m-2">Agregar Equipo</a>
                 </div>
             </div>
         </div>
