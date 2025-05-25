@@ -28,6 +28,8 @@ try {
     <?php if (!empty($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
+    <a href="/Music-BOOKING/app/views/admin/add_equipment.php" class="btn btn-primary m-2">Agregar Equipo</a>
+    <br><br>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
@@ -51,7 +53,7 @@ try {
                 <td><?php echo $item['disponible_prestamo'] ? 'Sí' : 'No'; ?></td>
                 <td>
                     <a href="edit_equipment.php?id=<?php echo urlencode($item['equipo_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="delete_equipment.php?id=<?php echo urlencode($item['equipo_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este equipo?');">Eliminar</a>
+                    <a href="../../controllers/delete_equipment.php?id=<?php echo urlencode($item['equipo_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este equipo?');">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

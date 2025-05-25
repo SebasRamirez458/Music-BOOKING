@@ -28,6 +28,8 @@ try {
     <?php if (!empty($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
+    <a href="/Music-BOOKING/app/views/admin/add_room.php" class="btn btn-success m-2">Agregar Sala</a>
+    <br><br>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
@@ -47,7 +49,7 @@ try {
                 <td><?php echo htmlspecialchars($room['precio_hora']); ?></td>
                 <td>
                     <a href="edit_room.php?id=<?php echo urlencode($room['sala_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="delete_room.php?id=<?php echo urlencode($room['sala_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta sala?');">Eliminar</a>
+                    <a href="../../controllers/delete_room.php?id=<?php echo urlencode($room['sala_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta sala?');">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>
