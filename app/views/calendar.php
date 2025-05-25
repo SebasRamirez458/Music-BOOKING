@@ -91,6 +91,12 @@ function getReservationsForDay($reservas, $dia) {
                                     <strong><?php echo htmlspecialchars($res['nombre_banda']); ?></strong><br>
                                     <?php echo date('H:i', strtotime($res['fecha_inicio'])); ?> - <?php echo date('H:i', strtotime($res['fecha_inicio'] . ' + ' . $res['duracion_horas'] . ' hours')); ?><br>
                                     Estado: <?php echo htmlspecialchars($res['estado_pago']); ?>
+                                    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                                        <form method="POST" class="mt-1 select-reserva-form">
+                                            <input type="hidden" name="selected_reserva_id" value="<?php echo $res['reserva_id']; ?>">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary w-100">Seleccionar</button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -101,11 +107,17 @@ function getReservationsForDay($reservas, $dia) {
             </tr>
         </tbody>
     </table>
-    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
+    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
         <a href="admin/admin_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
-    <?php else: ?>
-        <a href="user/user_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
-    <?php endif; ?>
+        <?php else: ?>
+            <a href="user/user_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] && isset($_POST['selected_reserva_id'])): ?>
+                <form method="GET" action="admin/manage_reservation.php" class="mt-3">
+                    <input type="hidden" name="reserva_id" value="<?php echo htmlspecialchars($_POST['selected_reserva_id']); ?>">
+                    <button type="submit" class="btn btn-warning">Administrar reserva seleccionada</button>
+                </form>
+            <?php endif; ?>
 </div>
 </body>
 </html>
