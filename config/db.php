@@ -1,10 +1,13 @@
 <?php
-// Parámetros de conexión (debes obtenerlos desde tu cuenta de Supabase)
-$host = 'db.eeuajwnkjuufegwuzmmz.supabase.co';
+
+// Cambié el modo de conección
+
+$host = 'aws-0-us-east-2.pooler.supabase.com';
 $dbname = 'postgres';
-$user = 'postgres';
+$user = 'postgres.eeuajwnkjuufegwuzmmz';
 $password = 'tbatqT3AxSzzNWxi';
-$port = '5432'; // Supabase usa el puerto 5432 para PostgreSQL
+$port = '6543'; 
+$pool_mode = 'transaction';
 
 try {
     $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
