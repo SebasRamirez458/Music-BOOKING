@@ -51,6 +51,7 @@ try {
                 <td>
                     <a href="edit_band.php?id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
                     <a href="delete_band.php?id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta banda?');">Eliminar</a>
+                    <a href="../dashboard/reserva_form.php?band_id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-primary btn-sm">Reservar Sala</a>
                 </td>
             </tr>
         <?php endforeach; ?>

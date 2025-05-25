@@ -29,6 +29,20 @@ class Reserva {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function hayConflicto($sala_id, $fecha_inicio, $duracion) {
+        $sql = "SELECT 1 FROM Reservas 
+                WHERE sala_id = :sala_id
+                AND fecha_inicio < (:fecha_inicio + (:duracion || ' hours')::INTERVAL)
+                AND (fecha_inicio + (duracion_horas || ' hours')::INTERVAL) > :fecha_inicio";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':sala_id', $sala_id);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':duracion', $duracion);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn() !== false; // Devuelve true si hay conflicto
+    }
 
     public function obtenerSalas() {
         $sql = "SELECT * FROM Salas";
