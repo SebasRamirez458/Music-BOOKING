@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare('UPDATE salas SET nombre_sala = ?, descripcion = ?, precio_hora = ? WHERE sala_id = ?');
         $stmt->execute([$nombre_sala, $descripcion, $precio_hora, $sala_id]);
         $_SESSION['edit_room_success'] = 'Sala actualizada correctamente.';
-        header('Location: ../views/admin/admin_home.php');
+        header('Location: ../views/admin/manage_rooms.php');
         exit();
     } catch (PDOException $e) {
         $_SESSION['edit_room_error'] = 'Error al actualizar la sala: ' . $e->getMessage();
