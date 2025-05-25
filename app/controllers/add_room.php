@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare('INSERT INTO salas (nombre_sala, descripcion, precio_hora) VALUES (?, ?, ?)');
         $stmt->execute([$nombre_sala, $descripcion, $precio_hora]);
         $_SESSION['add_room_success'] = 'Sala añadida correctamente.';
-        header('Location: /Music-BOOKING/app/views/admin/admin_home.php');
+        header('Location: /Music-BOOKING/app/views/admin/manage_rooms.php');
         exit();
     } catch (PDOException $e) {
         $_SESSION['add_room_error'] = 'Error al añadir la sala: ' . $e->getMessage();

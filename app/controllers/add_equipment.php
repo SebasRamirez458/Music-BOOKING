@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $disponible_prestamo
         ]);
         $_SESSION['add_equipment_success'] = 'Equipo añadido correctamente.';
-        header('Location: /Music-BOOKING/app/views/admin/admin_home.php');
+        header('Location: /Music-BOOKING/app/views/admin/manage_equipment.php');
         exit();
     } catch (PDOException $e) {
         $_SESSION['add_equipment_error'] = 'Error al añadir el equipo: ' . $e->getMessage();
