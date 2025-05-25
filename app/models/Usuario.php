@@ -7,7 +7,7 @@ class Usuario {
     }
 
     public function registrar($nombre, $email, $password) {
-        $sql = "INSERT INTO Usuarios (nombre, email, password) VALUES (:nombre, :email, :password)";
+        $sql = "INSERT INTO Usuarios (nombre, email, password, fecha_registro) VALUES (:nombre, :email, :password, CURRENT_TIMESTAMP)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
         $stmt->bindParam(':email', $email);

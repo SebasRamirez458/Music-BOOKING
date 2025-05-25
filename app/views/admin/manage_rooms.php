@@ -36,7 +36,7 @@ try {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Precio/Hora (€)</th>
+                <th>Precio/Hora ($)</th>
                 <th>Acciones</th>
             </tr>
         </thead>

@@ -25,6 +25,7 @@ $nombre = $_SESSION['usuario'];
                 <div class="card-body text-center">
                     <p class="lead">Has iniciado sesión correctamente.</p>
                     <a href="manage_bands.php" class="btn btn-primary mt-3">Administrar Bandas</a>
+                    <a href="../calendar.php" class="btn btn-warning mt-3">mostrar Calendario</a>
                 </div>
             </div>
         </div>
