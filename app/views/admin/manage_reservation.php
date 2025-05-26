@@ -31,6 +31,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
     header('Location: ../calendar.php?msg=Reserva eliminada');
     exit();
 }
+// --- GUARDAR CAMBIOS --- 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar'])) {
+    $reserva_id = intval($_POST['reserva_id']);
+    $fecha_inicio = $_POST['fecha_inicio'];
+    $duracion_horas = intval($_POST['duracion_horas']);
+    $estado_pago = $_POST['estado_pago'];
+    $total_reserva = floatval($_POST['total_reserva']);
+    $equipos_seleccionados = isset($_POST['equipos_seleccionados']) ? json_decode($_POST['equipos_seleccionados'], true) : [];
+
+    // Obtener sala_id de la reserva actual para la validación de conflicto
+    $stmt_sala = $conn->prepare('SELECT sala_id FROM reservas WHERE reserva_id = ?');
+    $stmt_sala->execute([$reserva_id]);
+    $sala_actual = $stmt_sala->fetch(PDO::FETCH_ASSOC);
+    $sala_id = $sala_actual['sala_id'];
+
+    // Verificar conflictos, excluyendo la reserva actual
+    $inicio_dt = new DateTime($fecha_inicio);
+    $fin_dt = clone $inicio_dt;
+    $fin_dt->modify("+{$duracion_horas} hours");
+    $fecha_fin = $fin_dt->format('Y-m-d H:i:s');
+
+    $stmt_conflicto = $conn->prepare(
+        'SELECT COUNT(*) FROM reservas '
+        . 'WHERE sala_id = :sala_id '
+        . 'AND reserva_id != :reserva_id '
+        . 'AND fecha_inicio < :fecha_fin '
+        . 'AND (fecha_inicio + (duracion_horas || \' hours\')::interval) > :fecha_inicio'
+    );
+    $stmt_conflicto->bindParam(':sala_id', $sala_id, PDO::PARAM_INT);
+    $stmt_conflicto->bindParam(':reserva_id', $reserva_id, PDO::PARAM_INT);
+    $stmt_conflicto->bindParam(':fecha_inicio', $fecha_inicio);
+    $stmt_conflicto->bindParam(':fecha_fin', $fecha_fin);
+    $stmt_conflicto->execute();
+    $conflicto = $stmt_conflicto->fetchColumn();
+
+    if ($conflicto > 0) {
+        echo '<div class="alert alert-danger">Error: La modificación de la reserva entra en conflicto con otra reserva existente.</div>';
+    } else {
+        // Actualizar la reserva
+        $stmt_update = $conn->prepare('UPDATE reservas SET fecha_inicio = ?, fecha_fin = ?, duracion_horas = ?, estado_pago = ?, total_reserva = ? WHERE reserva_id = ?');
+        $stmt_update->execute([$fecha_inicio, $fecha_fin, $duracion_horas, $estado_pago, $total_reserva, $reserva_id]);
+
+        // Actualizar equipos asociados
+        // Primero, eliminar todos los equipos actuales de esta reserva
+        $stmt_delete_equipos = $conn->prepare('DELETE FROM reserva_equipos WHERE reserva_id = ?');
+        $stmt_delete_equipos->execute([$reserva_id]);
+
+        // Luego, insertar los nuevos equipos seleccionados
+        if (!empty($equipos_seleccionados)) {
+            $stmt_insert_equipos = $conn->prepare('INSERT INTO reserva_equipos (reserva_id, equipo_id) VALUES (?, ?)');
+            foreach ($equipos_seleccionados as $equipo_id) {
+                $stmt_insert_equipos->execute([$reserva_id, intval($equipo_id)]);
+            }
+        }
+        header('Location: ../calendar.php?msg=Reserva actualizada');
+        exit();
+    }
+}
+// --- ELIMINAR RESERVA Y SUS EQUIPOS ASOCIADOS ---
 ?>
 <!DOCTYPE html>
 <html lang="es">
