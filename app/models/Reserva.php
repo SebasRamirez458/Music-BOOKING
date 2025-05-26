@@ -6,14 +6,14 @@ class Reserva {
         $this->conn = $db;
     }
 
-    public function crear($band_id, $sala_id, $fecha_inicio, $duracion) {
+    public function crear($band_id, $sala_id, $fecha_inicio, $duracion, $total_reserva) {
         $inicio = new DateTime($fecha_inicio);
         $fin = clone $inicio;
         $fin->modify("+{$duracion} hours");
         $fecha_fin = $fin->format('Y-m-d H:i:s');
         $fecha_creacion = (new DateTime('now', new DateTimeZone('America/Bogota')))->format('Y-m-d H:i:s');
-        $sql = "INSERT INTO Reservas (band_id, sala_id, fecha_inicio, fecha_fin, duracion_horas, fecha_creacion) 
-                VALUES (:band_id, :sala_id, :fecha_inicio, :fecha_fin, :duracion, :fecha_creacion)";
+        $sql = "INSERT INTO Reservas (band_id, sala_id, fecha_inicio, fecha_fin, duracion_horas, fecha_creacion, total_reserva)
+                VALUES (:band_id, :sala_id, :fecha_inicio, :fecha_fin, :duracion, :fecha_creacion, :total_reserva)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':band_id', $band_id);
         $stmt->bindParam(':sala_id', $sala_id);
@@ -21,6 +21,7 @@ class Reserva {
         $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->bindParam(':duracion', $duracion);
         $stmt->bindParam(':fecha_creacion', $fecha_creacion);
+        $stmt->bindParam(':total_reserva', $total_reserva);
         $stmt->execute();
         return $this->conn->lastInsertId();
     }
