@@ -28,6 +28,14 @@ try {
 <body class="bg-light">
 <?php include '../layouts/navbar_in.php';?>
 <div class="container mt-5">
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success"><?= $_SESSION['success']; unset($_SESSION['success']); ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+    <?php endif; ?>
+
     <h2 class="mb-4">Tus Bandas</h2>
     <?php if (!empty($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -50,9 +58,9 @@ try {
                 <td><?php echo htmlspecialchars($band['num_integrantes']); ?></td>
                 <td>
                     <a href="edit_band.php?id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="delete_band.php?id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta banda?');">Eliminar</a>
+                    <a href="../bandas/delete_band.php?id=<?= urlencode($band['band_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta banda?');">Eliminar</a>
                     <a href="add_reservation.php?band_id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-primary btn-sm">Reservar Sala</a>
-                    <a href="add_checkout.php?band_id=<?= $band['band_id'] ?>" class="btn btn-info btn-sm">Pedir Equipo</a>
+                    <a href="add_checkout.php?band_id=<?= $band['band_id'] ?>" class="btn btn-info btn-sm">Pedir Equipo</a>       
                 </td>
             </tr>
         <?php endforeach; ?>
