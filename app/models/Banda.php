@@ -15,6 +15,18 @@ class Banda {
         ]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function actualizar($band_id, $user_id, $nombre, $integrantes) {
+    $sql = "UPDATE Bandas SET nombre_banda = :nombre, num_integrantes = :num 
+            WHERE band_id = :id AND user_id = :user_id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':nombre', $nombre);
+    $stmt->bindParam(':num', $integrantes);
+    $stmt->bindParam(':id', $band_id);
+    $stmt->bindParam(':user_id', $user_id);
+    return $stmt->execute();
+    
+    }
     public function tieneRelacion($band_id) {
     $sql1 = "SELECT 1 FROM Reservas WHERE band_id = :id LIMIT 1";
     $sql2 = "SELECT 1 FROM Prestamos WHERE band_id = :id LIMIT 1";

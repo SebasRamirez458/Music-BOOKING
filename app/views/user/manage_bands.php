@@ -57,7 +57,7 @@ try {
                 <td><?php echo htmlspecialchars($band['nombre_banda']); ?></td>
                 <td><?php echo htmlspecialchars($band['num_integrantes']); ?></td>
                 <td>
-                    <a href="edit_band.php?id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="../bandas/edit_band.php?id=<?= urlencode($band['band_id']); ?>" class="btn btn-warning btn-sm">Editar</a>
                     <a href="../bandas/delete_band.php?id=<?= urlencode($band['band_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta banda?');">Eliminar</a>
                     <a href="add_reservation.php?band_id=<?php echo urlencode($band['band_id']); ?>" class="btn btn-primary btn-sm">Reservar Sala</a>
                     <a href="add_checkout.php?band_id=<?= $band['band_id'] ?>" class="btn btn-info btn-sm">Pedir Equipo</a>       
