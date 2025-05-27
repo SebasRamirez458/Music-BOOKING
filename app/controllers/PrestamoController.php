@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $band_id = $_POST['band_id'];
     $inicio = $_POST['fecha_inicio'];
     $fin = $_POST['fecha_fin'];
-    $equipos = $_POST['equipos']; // array de ID
+    $equipos = $_POST['equipos']; 
     $total = 0;
 
  
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $prestamo->vincularEquipo($prestamo_id, $eq['equipo_id'], $eq['precio_dia']);
     }
 
-    header("Location: ../../views/dashboard/prestamos.php");
+    header("Location: ../views/user/manage_bands.php");
+
     exit();
 }

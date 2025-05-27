@@ -59,5 +59,46 @@ class Reserva {
         $sql = "SELECT * FROM Salas";
         return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function obtenerPorUsuario($user_id) {
+    $sql = "SELECT r.reserva_id, r.fecha_inicio, r.duracion_horas, s.nombre_sala, b.nombre_banda
+            FROM Reservas r
+            JOIN Salas s ON r.sala_id = s.sala_id
+            JOIN Bandas b ON r.band_id = b.band_id
+            WHERE b.user_id = :user_id
+            ORDER BY r.fecha_inicio DESC";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function eliminar($reserva_id, $user_id) {
+    $sql = "SELECT r.reserva_id FROM Reservas r
+            JOIN Bandas b ON r.band_id = b.band_id
+            WHERE r.reserva_id = :id AND b.user_id = :user_id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $reserva_id);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+
+    if (!$stmt->fetch()) {
+        return false; 
+    }
+
+    
+    $sqlDeleteEquipos = "DELETE FROM Reserva_Equipos WHERE reserva_id = :id";
+    $stmt = $this->conn->prepare($sqlDeleteEquipos);
+    $stmt->bindParam(':id', $reserva_id);
+    $stmt->execute();
+
+    
+    $sqlDeleteReserva = "DELETE FROM Reservas WHERE reserva_id = :id";
+    $stmt = $this->conn->prepare($sqlDeleteReserva);
+    $stmt->bindParam(':id', $reserva_id);
+    return $stmt->execute();
+}
+
+
 }
 ?>

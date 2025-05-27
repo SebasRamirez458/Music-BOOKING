@@ -6,8 +6,12 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['user_id'])) {
     exit();
 }
 require_once __DIR__ . '/../../../config/db.php';
+require_once __DIR__ . '/../../models/Reserva.php';
 
 $user_id = intval($_SESSION['user_id']);
+$reservaModel = new Reserva($conn);
+$reservas = $reservaModel->obtenerPorUsuario($user_id);
+
 $bands = [];
 $error = '';
 try {
@@ -66,6 +70,42 @@ try {
         <?php endforeach; ?>
         </tbody>
     </table>
+    <h3 class="mt-5">Reservas Activas</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Banda</th>
+                <th>Sala</th>
+                <th>Fecha de Inicio</th>
+                <th>Duración (horas)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (count($reservas) > 0): ?>
+            <?php foreach ($reservas as $res): ?>
+                <tr>
+                    <td><?= htmlspecialchars($res['nombre_banda']) ?></td>
+                    <td><?= htmlspecialchars($res['nombre_sala']) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($res['fecha_inicio'])) ?></td>
+                    <td><?= $res['duracion_horas'] ?></td>
+                    <td>
+                        <a href=" delete_reserva.php?id=<?= $res['reserva_id'] ?>" 
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Seguro que deseas eliminar esta reserva?');">
+                        Eliminar
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5" class="text-center">No hay reservas activas.</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+
     <a href="user_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
 </div>
 </body>

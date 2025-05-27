@@ -15,7 +15,7 @@ class Prestamo {
         $stmt->bindParam(':fin', $fecha_fin);
         $stmt->bindParam(':total', $total_prestamo);
         $stmt->execute();
-        return $this->conn->lastInsertId(); // ID del préstamo creado
+        return $this->conn->lastInsertId(); 
     }
 
     public function obtenerEquiposDisponibles($fecha_inicio, $fecha_fin) {
@@ -42,5 +42,20 @@ class Prestamo {
         $stmt->bindParam(':precio', $precio_unitario);
         return $stmt->execute();
     }
+    public function obtenerPorUsuario($user_id) {
+    $sql = "SELECT p.prestamo_id, p.fecha_inicio_prestamo, p.fecha_fin_prestamo, 
+                   p.total_prestamo, b.nombre_banda
+            FROM Prestamos p
+            JOIN Bandas b ON p.band_id = b.band_id
+            WHERE b.user_id = :user_id
+            ORDER BY p.fecha_inicio_prestamo DESC";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
