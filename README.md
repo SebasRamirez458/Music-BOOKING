@@ -2,7 +2,7 @@
 
 db schema:
  
-CREATE TABLE Usuarios ( 
+CREATE TABLE usuarios ( 
     user_id SERIAL PRIMARY KEY, 
     nombre VARCHAR(100) NOT NULL, 
     email VARCHAR(100) UNIQUE NOT NULL, 
@@ -11,7 +11,7 @@ CREATE TABLE Usuarios (
 ); 
  
  
-CREATE TABLE Bandas ( 
+CREATE TABLE bandas ( 
     band_id SERIAL PRIMARY KEY, 
     user_id INT NOT NULL REFERENCES Usuarios(user_id), 
     nombre_banda VARCHAR(100) UNIQUE NOT NULL, 
@@ -19,7 +19,7 @@ CREATE TABLE Bandas (
 ); 
  
  
-CREATE TABLE Salas ( 
+CREATE TABLE salas ( 
     sala_id SERIAL PRIMARY KEY, 
     nombre_sala VARCHAR(100) NOT NULL, 
     descripcion TEXT, 
@@ -28,7 +28,7 @@ CREATE TABLE Salas (
 ); 
  
  
-CREATE TABLE Equipos ( 
+CREATE TABLE equipos ( 
     equipo_id SERIAL PRIMARY KEY, 
     nombre_equipo VARCHAR(100) NOT NULL, 
     descripcion TEXT, 
@@ -38,7 +38,7 @@ CREATE TABLE Equipos (
 ); 
  
  
-CREATE TABLE Reservas ( 
+CREATE TABLE reservas ( 
     reserva_id SERIAL PRIMARY KEY, 
     band_id INT NOT NULL REFERENCES Bandas(band_id), 
     sala_id INT NOT NULL REFERENCES Salas(sala_id), 
@@ -51,7 +51,7 @@ CREATE TABLE Reservas (
 ); 
  
  
-CREATE TABLE Prestamos ( 
+CREATE TABLE prestamos ( 
     prestamo_id SERIAL PRIMARY KEY, 
     band_id INT NOT NULL REFERENCES Bandas(band_id), 
     fecha_inicio_prestamo TIMESTAMP NOT NULL, 
@@ -62,14 +62,14 @@ CREATE TABLE Prestamos (
 ); 
  
  
-CREATE TABLE Reserva_Equipos ( 
+CREATE TABLE reserva_equipos ( 
     reserva_equipo_id SERIAL PRIMARY KEY, 
     reserva_id INT NOT NULL REFERENCES Reservas(reserva_id), 
     equipo_id INT NOT NULL REFERENCES Equipos(equipo_id) 
 ); 
  
  
-CREATE TABLE Prestamo_Equipos ( 
+CREATE TABLE prestamo_equipos ( 
 prestamo_equipo_id SERIAL PRIMARY KEY, 
 prestamo_id INT NOT NULL REFERENCES Prestamos(prestamo_id), 
 equipo_id INT NOT NULL REFERENCES Equipos(equipo_id), 

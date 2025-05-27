@@ -88,9 +88,9 @@ if (!$band_id) {
                         <option value="">Selecciona una categoría</option>
                         <option value="Instrumento">Instrumento</option>
                         <option value="Micrófono">Micrófono</option>
-                        <option value="Clabeado/conexión">Clabeado/conexión</option>
+                        <option value="Cableado/conexión">Clabeado/conexión</option>
                         <option value="Amplificadores">Amplificadores</option>
-                        <option value="Modulos de efectos">Modulos de efectos</option>
+                        <option value="Módulos de efectos">Módulos de efectos</option>
                         <option value="Otros">Otros</option>
                     </select>
                 </div>

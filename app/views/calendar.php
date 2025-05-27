@@ -110,9 +110,16 @@ function getReservationsForDay($reservas, $dia) {
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
         <div class="d-flex justify-content-between align-items-center mt-3">
             <a href="admin/admin_home.php" class="btn btn-secondary">Volver al menú principal</a>
-            <?php if (isset($_POST['selected_reserva_id'])): ?>
+            <?php 
+            $selected_reserva_id = null;
+            if (isset($_POST['selected_reserva_id'])) {
+                $selected_reserva_id = $_POST['selected_reserva_id'];
+            } elseif (isset($_GET['selected_reserva_id'])) {
+                $selected_reserva_id = $_GET['selected_reserva_id'];
+            }
+            if ($selected_reserva_id): ?>
                 <form method="GET" action="admin/manage_reservation.php" class="mb-0">
-                    <input type="hidden" name="reserva_id" value="<?php echo htmlspecialchars($_POST['selected_reserva_id']); ?>">
+                    <input type="hidden" name="reserva_id" value="<?php echo htmlspecialchars($selected_reserva_id); ?>">
                     <button type="submit" class="btn btn-warning">Administrar reserva seleccionada</button>
                 </form>
             <?php endif; ?>
