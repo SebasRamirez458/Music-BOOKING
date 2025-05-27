@@ -43,19 +43,46 @@ class Prestamo {
         return $stmt->execute();
     }
     public function obtenerPorUsuario($user_id) {
-    $sql = "SELECT p.prestamo_id, p.fecha_inicio_prestamo, p.fecha_fin_prestamo, 
+    $sql = "SELECT p.prestamo_id, p.fecha_inicio_prestamo, p.fecha_fin_prestamo,
                    p.total_prestamo, b.nombre_banda
             FROM Prestamos p
             JOIN Bandas b ON p.band_id = b.band_id
             WHERE b.user_id = :user_id
             ORDER BY p.fecha_inicio_prestamo DESC";
-    
     $stmt = $this->conn->prepare($sql);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
-    
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function eliminar($prestamo_id, $user_id) {
+
+    $sql = "SELECT p.prestamo_id
+            FROM Prestamos p
+            JOIN Bandas b ON p.band_id = b.band_id
+            WHERE p.prestamo_id = :id AND b.user_id = :user_id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $prestamo_id);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+
+    if (!$stmt->fetch()) {
+        return false;
     }
+
+
+    $sqlEquipos = "DELETE FROM Prestamo_Equipos WHERE prestamo_id = :id";
+    $stmt = $this->conn->prepare($sqlEquipos);
+    $stmt->bindParam(':id', $prestamo_id);
+    $stmt->execute();
+
+
+    $sqlPrestamo = "DELETE FROM Prestamos WHERE prestamo_id = :id";
+    $stmt = $this->conn->prepare($sqlPrestamo);
+    $stmt->bindParam(':id', $prestamo_id);
+    return $stmt->execute();
+    }   
+
 
 }
 ?>

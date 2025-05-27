@@ -7,8 +7,12 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['user_id'])) {
 }
 require_once __DIR__ . '/../../../config/db.php';
 require_once __DIR__ . '/../../models/Reserva.php';
+require_once __DIR__ . '/../../models/Prestamo.php';
+
 
 $user_id = intval($_SESSION['user_id']);
+$prestamoModel = new Prestamo($conn);
+$prestamos = $prestamoModel->obtenerPorUsuario($user_id);
 $reservaModel = new Reserva($conn);
 $reservas = $reservaModel->obtenerPorUsuario($user_id);
 
@@ -90,7 +94,7 @@ try {
                     <td><?= date('d/m/Y H:i', strtotime($res['fecha_inicio'])) ?></td>
                     <td><?= $res['duracion_horas'] ?></td>
                     <td>
-                        <a href=" delete_reserva.php?id=<?= $res['reserva_id'] ?>" 
+                        <a href="../../controllers/delete_reserva.php?id=<?= $res['reserva_id'] ?>" 
                         class="btn btn-danger btn-sm"
                         onclick="return confirm('¿Seguro que deseas eliminar esta reserva?');">
                         Eliminar
@@ -105,6 +109,38 @@ try {
         <?php endif; ?>
         </tbody>
     </table>
+        <h3 class="mt-5">Préstamos Activos</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Banda</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (count($prestamos) > 0): ?>
+            <?php foreach ($prestamos as $p): ?>
+                <tr>
+                    <td><?= htmlspecialchars($p['nombre_banda']) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($p['fecha_inicio_prestamo'])) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($p['fecha_fin_prestamo'])) ?></td>
+                    <td>$<?= number_format($p['total_prestamo'], 0) ?></td>
+                    <td>
+                        <a href="../../controllers/delete_prestamo.php?id=<?= $p['prestamo_id'] ?>"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Deseas eliminar este préstamo?');">Eliminar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="5" class="text-center">No hay préstamos activos.</td></tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+
 
     <a href="user_home.php" class="btn btn-secondary mt-3">Volver al menú principal</a>
 </div>
