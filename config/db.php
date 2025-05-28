@@ -1,19 +1,13 @@
 <?php
-
-// Cambié el modo de conección
-
-$host = 'aws-0-us-east-2.pooler.supabase.com';
-$dbname = 'postgres';
-$user = 'postgres.eeuajwnkjuufegwuzmmz';
-$password = 'tbatqT3AxSzzNWxi';
-$port = '6543'; 
-$pool_mode = 'transaction';
+$host = getenv('DB_HOST');
+$db   = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
+$port = getenv('DB_PORT') ?: '5432';
 
 try {
-    $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
+    $conn = new PDO("pgsql:host=$host;port=$port;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // echo "Conexión exitosa"; // Puedes descomentar esto para pruebas
 } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
 }
-?>
